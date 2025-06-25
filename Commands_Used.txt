@@ -1,0 +1,33 @@
+---------------------###To install Docker###
+
+brew install --cask docker
+brew install kubectl minikube helm
+
+
+---------------------###To run main.py###
+
+pip install fastapi uvicorn transformers
+uvicorn app.main:app --reload
+
+---------------------###To test main.py###
+
+Use FastAPI SwaggerUI: http://127.0.0.1:8000/docs
+
+---------------------###To build docker image###
+
+docker build -t kubeserve-api .
+
+---------------------###To run docker image###
+
+docker run -d -p 80:80 kubeserve-api
+
+---------------------###To Start Kubernetes Cluster###
+
+minikube start --driver=docker --cpus=4 --memeory=2g
+minikube addons enable metrics-server
+minikube image load kubeserver-api
+
+kubectl apply -f manifests/deployment.yaml
+kubectl apply -f manifests/service.yaml
+
+minikube service kubeserve-service
