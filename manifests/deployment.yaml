@@ -24,4 +24,15 @@ spec:
             limits:
               cpu: 250m
               memory: 256Mi
-          
+          livenessProbe:
+            httpGet:
+              path: /predict
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /predict
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
