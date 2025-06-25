@@ -11,4 +11,17 @@ spec:
     metadata:
       labels:
         app: kubeserve
-    
+    spec:
+      containers:
+        - name: kubeserve
+          image: kubeserve-api
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          
