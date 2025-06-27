@@ -1,0 +1,64 @@
+1. Prerequisites
+
+- Docker
+- Minikube
+- kubectl
+- Python 3.10+ (only for local testing outside K8s)
+
+
+2. Clone and Build
+
+git clone https://github.com/your-username/KubeServe.git
+cd KubeServe
+eval $(minikube docker-env)
+docker build -t kubeserve-api .
+
+
+3. Deploy to Kubernetes
+
+kubectl apply -f manifests/configmap.yaml
+kubectl apply -f manifests/deployment.yaml
+kubectl apply -f manifests/service.yaml
+kubectl apply -f manifests/ingress.yaml
+
+4. ConfigMap
+
+The ConfigMap (manifests/configmap.yaml) is used to store configuration data separately from the container image. 
+This helps keep environment-specific settings like model paths or API keys flexible and manageable
+
+5. Enable Autoscaling
+
+minikube addons enable metrics-server
+kubectl autoscale deployment kubeserve --cpu-percent=50 --min=2 --max=5 (or) using hpa.yaml
+
+6. Self-Healing
+
+Kubernetes monitors pod health using liveness and readiness probes defined in the deployment manifest. 
+If a pod becomes unresponsive or unhealthy, Kubernetes automatically restarts it.
+
+7. Monitoring
+
+minikube addons enable metrics-server
+kubectl top pods
+kubectl top nodes
+
+8. Test the App
+
+Use port-forward if not using ingress:
+
+kubectl port-forward service/kubeserve-service 8080:80
+Then test:
+
+curl -X POST http://localhost:8080/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Kubernetes is awesome!"}'
+
+
+9. If using ingress:
+
+Add to /etc/hosts:
+127.0.0.1 kubeserve.local
+Then test:
+curl -X POST http://kubeserve.local/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Kubernetes is awesome!"}'
