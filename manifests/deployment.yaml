@@ -15,24 +15,25 @@ spec:
       containers:
         - name: kubeserve
           image: kubeserve-api
+          imagePullPolicy: Never
           ports:
             - containerPort: 80
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
               cpu: 250m
-              memory: 256Mi
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
           livenessProbe:
             httpGet:
-              path: /predict
+              path: /health
               port: 80
             initialDelaySeconds: 10
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /predict
+              path: /health
               port: 80
             initialDelaySeconds: 5
             periodSeconds: 10
