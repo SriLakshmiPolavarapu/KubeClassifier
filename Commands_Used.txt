@@ -34,6 +34,9 @@ minikube service kubeserve-service
 
 ---------------------###To create Autoscaling
 
+#### enabled metrics server
+minikube addons enable metrics-server
+
 used hpa.yaml to create HPA
 kubectl apply -f hpa.yaml
 kubectl get hpa
