@@ -59,3 +59,9 @@ minikube addons enable metrics-server
 kubectl top pods
 kubectl top nodes
 minikube dashboard
+
+------------------------#### Self-healing - Kubernetes auto-restart
+
+kubectl get pods
+kubectl delete pod <pod-name>
+kubectl get pods -w (pod is automatically created)
