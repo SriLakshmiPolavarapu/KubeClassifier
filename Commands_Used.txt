@@ -94,3 +94,18 @@ curl -X POST http://192.168.49.2/predict \
   -H "Content-Type: application/json" \
   -d '{"text": "Kubernetes Ingress is cool!"}'
 
+
+
+------------------------#### To Run Everything
+
+docker build -t kubeserve-api .
+eval $(minikube docker-env)
+kubectl delete deployment kubeserve
+kubectl apply -f manifests/deployment.yaml
+kubectl apply -f manifests/service.yaml
+kubectl get pods
+kubectl port-forward service/kubeserve-service 8080:80
+(In other terminal)
+ curl -X POST http://localhost:8080/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Kubernetes makes deployment easy!"}'
