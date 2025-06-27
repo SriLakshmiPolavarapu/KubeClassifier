@@ -51,3 +51,11 @@ while true; do curl -s -X POST http://kubeserve-service/predict \
 
 #### Watching Autoscaling in application
 watch kubectl get hpa
+
+
+------------------------#### Monitoring
+
+minikube addons enable metrics-server
+kubectl top pods
+kubectl top nodes
+minikube dashboard
