@@ -81,3 +81,16 @@ kubectl get pods -w
 
 kubectl apply -f configmap.yaml
 kubectl apply -f manifests/deployment.yaml
+
+------------------------#### Ingress Controller
+
+minikube addons enable ingress
+minikube ip 
+sudo nano /etc/hosts   ---> add 192.168.48.2    kubeserve.local
+minikube tunnel
+
+--> to test
+curl -X POST http://192.168.49.2/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Kubernetes Ingress is cool!"}'
+
