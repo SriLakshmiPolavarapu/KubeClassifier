@@ -74,3 +74,10 @@ kubectl delete deployment kubeserve
 kubectl apply -f manifests/deployment.yaml
 kubectl get pods -w
 
+------------------------#### ConfigMap
+
+-> configmap.yaml
+-> update deployment.yaml
+
+kubectl apply -f configmap.yaml
+kubectl apply -f manifests/deployment.yaml
