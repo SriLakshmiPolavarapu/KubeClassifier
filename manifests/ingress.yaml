@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubeserve-ingress
+spec:
+  rules:
+    - host: kubeserve.local
+      http:
+        paths:
+          - path: /predict
+            pathType: Prefix
+            backend:
+              service:
+                name: kubeserve-service
+                port:
+                  number: 80
