@@ -65,3 +65,12 @@ minikube dashboard
 kubectl get pods
 kubectl delete pod <pod-name>
 kubectl get pods -w (pod is automatically created)
+
+-----## manually check failure by triggering liveness probe failure
+
+eval $(minikube docker-env)
+docker build -t kubeserve-api .
+kubectl delete deployment kubeserve
+kubectl apply -f manifests/deployment.yaml
+kubectl get pods -w
+
