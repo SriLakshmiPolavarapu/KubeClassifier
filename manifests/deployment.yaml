@@ -18,6 +18,12 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 80
+          env:
+            - name: MODEL_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: model-config
+                  key: MODEL_NAME
           resources:
             requests:
               cpu: 250m
